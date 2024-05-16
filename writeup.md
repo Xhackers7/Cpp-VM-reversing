@@ -11,6 +11,7 @@ When we run the vm it tells us we need to give the bytecode file as an argument,
 
 ## Intial Analysis
 Lets run strace on the binary
+
 ![strace-output](strace.png)
 
 A lot of filesystem calls are being made and it seems like this vm uses files as registers.
@@ -26,6 +27,7 @@ Cpus can be split into 4 major components
 - Ram (Not part of cpu but a crucial component)
 
 ### Fetch Decode Execute cycle
+
 ![cpu-cycle](cpu.jpg)
 
 The cpu is essentially doing the fetch-decode-execute-store cycle on a loop
@@ -77,9 +79,11 @@ if reg[6] != reg[7]: jump reg[5]
 ```
 So now we know reg[6] and reg[7] needs to be equal, hence one of these is generated from our input and the other is generated from the actual flag
 After running the program multiple times and inspecting the values of the register, we can see that the value of reg[7] is all 0's while the value of reg[6] keeps on changing with the input
+
 ![register-output](regs.png)
 
 Now lets goto to just after input is taken
+
 ![disassembly-patterns](pattern.png)
 
 From the given code you may notice some predefined value is being generated into reg[1] and the last value of our input is popped into reg[2]
