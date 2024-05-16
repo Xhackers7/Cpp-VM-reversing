@@ -26,6 +26,7 @@ Cpus can be split into 4 major components
 
 ### Fetch Decode Execute cycle
 ![cpu-cycle](cpu.jpg)
+
 The cpu is essentially doing the fetch-decode-execute-store cycle on a loop
 - **fetch** - fetches the current instruction from ram
 - **decodes, execute** - decodes the meaning of the opcode and executing the operation, In many simple vms and cpus the decode and execute cycles happen simultaeously
