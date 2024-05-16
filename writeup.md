@@ -12,6 +12,7 @@ When we run the vm it tells us we need to give the bytecode file as an argument,
 ## Intial Analysis
 Lets run strace on the binary
 ![strace-output](strace.png)
+
 A lot of filesystem calls are being made and it seems like this vm uses files as registers.
 
 Now before I dive further into the analysis, lets explore how a vm or cpu works
@@ -77,8 +78,10 @@ if reg[6] != reg[7]: jump reg[5]
 So now we know reg[6] and reg[7] needs to be equal, hence one of these is generated from our input and the other is generated from the actual flag
 After running the program multiple times and inspecting the values of the register, we can see that the value of reg[7] is all 0's while the value of reg[6] keeps on changing with the input
 ![register-output](regs.png)
+
 Now lets goto to just after input is taken
 ![disassembly-patterns](pattern.png)
+
 From the given code you may notice some predefined value is being generated into reg[1] and the last value of our input is popped into reg[2]
 Then value of reg[1] is subtracted(regs[2] = -regs[2] + regs[1]) from reg[2] and being stored in reg[2], after that we append it to reg[6], and reg[5]\(value 0) is being appened to reg[7]
 Since we want reg[6] == reg[7] we need reg[6] to be all 0's for that each reg[2] must be 0, in this particular pattern final value of reg[2] = -reg[2]\(input.pop()) + reg[1]\(generated value), it will only be 0 if input.pop() == reg[1].
